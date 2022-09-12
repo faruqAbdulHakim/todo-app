@@ -35,3 +35,10 @@ export function changeTodoCompleteStatus(
     payload: { id, complete },
   };
 }
+
+export function deleteTodo(id: number): TodoAction {
+  return {
+    action: 'DELETE_TODO',
+    payload: { id },
+  };
+}

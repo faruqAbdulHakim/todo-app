@@ -18,10 +18,14 @@ export const CheckButton = forwardRef(
     useEffect(() => {
       if (checked) {
         gsap.to(iconCheckRef.current, {
-          scale: 1.15,
+          scale: 1.3,
           duration: 0.4,
         });
-        gsap.to(iconCheckRef.current, { scale: 1, duration: 0.2, delay: 0.4 });
+        gsap.to(iconCheckRef.current, {
+          scale: 1.1,
+          duration: 0.3,
+          delay: 0.4,
+        });
       } else {
         gsap.to(iconCheckRef.current, { scale: 0, duration: 0.2 });
       }

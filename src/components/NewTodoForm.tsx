@@ -2,7 +2,6 @@ import { addTodo } from 'contexts/TodoAction';
 import { useTodoContext } from 'contexts/TodoContext';
 import { useRef, useState } from 'react';
 import { CheckButton } from './CheckButton';
-import { CheckButtonContainer } from './CheckButtonContainer';
 import { NewTodoInput } from './NewTodoInput';
 
 export function NewTodoForm() {
@@ -26,15 +25,13 @@ export function NewTodoForm() {
   return (
     <form
       onSubmit={submitHandler}
-      className="flex items-center bg-white dark:bg-[#25273C] mt-8 xl:mt-10 h-12 xl:h-16 rounded-md overflow-hidden"
+      className="px-5 xl:px-6 gap-3 xl:gap-6 flex items-center bg-white dark:bg-[#25273C] mt-8 xl:mt-10 h-12 xl:h-16 rounded-md overflow-hidden"
     >
-      <CheckButtonContainer>
-        <CheckButton
-          ref={checkButtonRef}
-          checked={checked}
-          onClick={checkHandler}
-        />
-      </CheckButtonContainer>
+      <CheckButton
+        ref={checkButtonRef}
+        checked={checked}
+        onClick={checkHandler}
+      />
       <NewTodoInput onAdd={onAdd} />
     </form>
   );

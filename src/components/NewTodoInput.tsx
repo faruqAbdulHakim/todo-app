@@ -20,7 +20,7 @@ export function NewTodoInput({ onAdd }: NewTodoInputProps) {
       ref={inputRef}
       type="text"
       name="todo"
-      className="bg-transparent w-full h-full pr-4 outline-none caret-blue-500 placeholder:text-xs xl:placeholder:text-base xl:placeholder:translate-y-[.125rem]"
+      className="bg-transparent dark:text-white flex-1 h-full outline-none caret-blue-500 placeholder:text-xs xl:placeholder:text-base xl:placeholder:translate-y-[.125rem] transition-colors duration-500"
       placeholder="Create a new todo..."
       aria-label="Create a new todo input"
       onKeyDown={keyDownHandler}
