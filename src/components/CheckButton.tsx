@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 
 import IconCheck from 'assets/svgs/icon-check.svg';
@@ -8,52 +8,53 @@ interface CheckButtonProps {
   onClick(event: React.MouseEvent<HTMLButtonElement>): void;
 }
 
-export const CheckButton = forwardRef(
-  (
-    { checked, onClick }: CheckButtonProps,
-    ref: React.ForwardedRef<HTMLButtonElement>
-  ) => {
-    const iconCheckRef = useRef<HTMLImageElement>(null);
+export function CheckButton({ checked, onClick }: CheckButtonProps) {
+  const [disabled, setDisabled] = useState<boolean>(false);
+  const iconCheckRef = useRef<HTMLImageElement>(null);
 
-    useEffect(() => {
+  useEffect(() => {
+    const animate = async () => {
+      setDisabled(true);
       if (checked) {
-        gsap.to(iconCheckRef.current, {
-          scale: 1.3,
-          duration: 0.4,
+        await gsap.to(iconCheckRef.current, {
+          scale: 1.4,
+          duration: 0.2,
         });
-        gsap.to(iconCheckRef.current, {
+        await gsap.to(iconCheckRef.current, {
           scale: 1.1,
           duration: 0.3,
-          delay: 0.4,
+          delay: 0.2,
         });
       } else {
-        gsap.to(iconCheckRef.current, { scale: 0, duration: 0.2 });
+        await gsap.to(iconCheckRef.current, { scale: 0, duration: 0.2 });
       }
-    }, [checked]);
+      setDisabled(false);
+    };
+    animate();
+  }, [checked]);
 
-    return (
-      <button
-        type="button"
-        ref={ref}
-        onClick={onClick}
-        className={`w-5 h-5 xl:w-6 xl:h-6 rounded-full p-[0.125rem] hover:bg-gradient-to-br hover:from-[#57DDFF] hover:to-[#C058F3] 
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`w-5 h-5 xl:w-6 xl:h-6 rounded-full p-[0.125rem] hover:bg-gradient-to-br hover:from-[#57DDFF] hover:to-[#C058F3] 
         ${
           checked
             ? 'bg-gradient-to-br from-[#57DDFF] to-[#C058F3]'
             : 'bg-gray-100 dark:bg-gray-700'
         }`}
-        title="Click to mark todo as completed"
-      >
-        <div className="bg-white dark:bg-[#25273C] rounded-full h-full w-full">
-          <img
-            ref={iconCheckRef}
-            src={IconCheck}
-            alt=""
-            aria-hidden="true"
-            className="scale-0 bg-gradient-to-br from-[#57DDFF] to-[#C058F3] rounded-full w-full h-full p-1"
-          />
-        </div>
-      </button>
-    );
-  }
-);
+      title="Click to mark todo as completed"
+      disabled={disabled}
+    >
+      <div className="bg-white dark:bg-[#25273C] rounded-full h-full w-full">
+        <img
+          ref={iconCheckRef}
+          src={IconCheck}
+          alt=""
+          aria-hidden="true"
+          className="scale-0 bg-gradient-to-br from-[#57DDFF] to-[#C058F3] rounded-full w-full h-full p-1"
+        />
+      </div>
+    </button>
+  );
+}

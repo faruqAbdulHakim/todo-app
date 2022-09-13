@@ -21,6 +21,7 @@
       "assets/*": ["assets/*"],
       "components/*": ["components/*"],
       "contexts/*": ["contexts/*"],
+      "types/*": ["types/*"],
       "utils/*": ["utils/*"]
     }
   },

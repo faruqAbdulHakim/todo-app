@@ -24,6 +24,7 @@ export function NewTodoInput({ onAdd }: NewTodoInputProps) {
       placeholder="Create a new todo..."
       aria-label="Create a new todo input"
       onKeyDown={keyDownHandler}
+      autoComplete="off"
     />
   );
 }

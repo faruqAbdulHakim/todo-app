@@ -17,6 +17,10 @@ export type TodoAction =
   | {
       action: 'DELETE_TODO';
       payload: { id: number };
+    }
+  | {
+      action: 'CLEAR_COMPLETED';
+      payload: {};
     };
 
 export function addTodo(todo: Todo): TodoAction {
@@ -40,5 +44,12 @@ export function deleteTodo(id: number): TodoAction {
   return {
     action: 'DELETE_TODO',
     payload: { id },
+  };
+}
+
+export function clearCompleted(): TodoAction {
+  return {
+    action: 'CLEAR_COMPLETED',
+    payload: {},
   };
 }
