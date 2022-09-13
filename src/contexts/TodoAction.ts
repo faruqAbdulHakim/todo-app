@@ -21,6 +21,14 @@ export type TodoAction =
   | {
       action: 'CLEAR_COMPLETED';
       payload: {};
+    }
+  | {
+      action: 'SET_DRAGGED_TODO';
+      payload: { id: number | null };
+    }
+  | {
+      action: 'MOVE_TODO';
+      payload: { fromId: number; toId: number };
     };
 
 export function addTodo(todo: Todo): TodoAction {
@@ -51,5 +59,19 @@ export function clearCompleted(): TodoAction {
   return {
     action: 'CLEAR_COMPLETED',
     payload: {},
+  };
+}
+
+export function setDraggedTodo(id: number | null): TodoAction {
+  return {
+    action: 'SET_DRAGGED_TODO',
+    payload: { id },
+  };
+}
+
+export function moveTodo(fromId: number, toId: number): TodoAction {
+  return {
+    action: 'MOVE_TODO',
+    payload: { fromId, toId },
   };
 }

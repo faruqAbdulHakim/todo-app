@@ -20,3 +20,8 @@ export function insertItemAtIndex<TItem>(
 ) {
   return [...items.slice(0, index), item, ...items.slice(index)];
 }
+
+export function moveItem<TItem>(items: TItem[], from: number, to: number) {
+  const item = items[from];
+  return insertItemAtIndex(removeItemAtIndex(items, from), item, to);
+}

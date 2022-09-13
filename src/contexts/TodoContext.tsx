@@ -11,10 +11,12 @@ export interface Todo {
 
 export interface TodoState {
   todos: Todo[];
+  draggedTodo: { id: number | null };
 }
 
 interface TodoContextProps {
   todos: Todo[];
+  draggedTodo: { id: number | null };
   dispatch: React.Dispatch<TodoAction>;
 }
 
@@ -29,10 +31,10 @@ export const TodoContext = createContext<TodoContextProps>(
 export function TodoContextProvider({ children }: TodoContextProviderProps) {
   const [state, dispatch] = useReducer(TodoReducer, getInitialData());
 
-  const { todos } = state;
+  const { todos, draggedTodo } = state;
 
   return (
-    <TodoContext.Provider value={{ todos, dispatch }}>
+    <TodoContext.Provider value={{ todos, draggedTodo, dispatch }}>
       {children}
     </TodoContext.Provider>
   );

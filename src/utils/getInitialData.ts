@@ -34,5 +34,6 @@ export function getInitialData(): TodoState {
         complete: false,
       },
     ],
+    draggedTodo: { id: null },
   };
 }

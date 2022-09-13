@@ -1,6 +1,11 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
-import { changeTodoCompleteStatus, deleteTodo } from 'contexts/TodoAction';
+import {
+  changeTodoCompleteStatus,
+  deleteTodo,
+  moveTodo,
+  setDraggedTodo,
+} from 'contexts/TodoAction';
 import { Todo, useTodoContext } from 'contexts/TodoContext';
 import { CheckButton } from './CheckButton';
 import { TodoRemoveButton } from './TodoRemoveButton';
@@ -18,7 +23,7 @@ export function TodoItem({
   clearCompleteAnimate,
 }: TodoItemProps) {
   const itemRef = useRef<HTMLDivElement>(null);
-  const { dispatch } = useTodoContext();
+  const { draggedTodo, dispatch } = useTodoContext();
 
   const checkHandler = () => {
     dispatch(changeTodoCompleteStatus(todo.id, !todo.complete));
@@ -45,7 +50,7 @@ export function TodoItem({
       }
     };
     animate();
-  });
+  }, [todoIndexGroupByFilter, todo.display]);
 
   useEffect(() => {
     if (clearCompleteAnimate && todo.complete) {
@@ -64,10 +69,31 @@ export function TodoItem({
     dispatch(deleteTodo(todo.id));
   };
 
+  const dragStartHandler = () => {
+    dispatch(setDraggedTodo(todo.id));
+    itemRef.current!.style.position = 'relative';
+  };
+
+  const dragEndHandler = () => {
+    dispatch(setDraggedTodo(null));
+    itemRef.current!.style.removeProperty('position');
+  };
+
+  const dragOverHandler = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (draggedTodo.id) {
+      dispatch(moveTodo(draggedTodo.id, todo.id));
+    }
+  };
+
   return (
     <div
       ref={itemRef}
       className="px-5 xl:px-6 flex h-[3.25rem] max-h-24 xl:h-16 items-center overflow-hidden group"
+      onDragStart={dragStartHandler}
+      onDragEnd={dragEndHandler}
+      onDragOver={dragOverHandler}
+      draggable
     >
       <CheckButton checked={todo.complete} onClick={checkHandler} />
       <TodoText text={todo.todo} completed={todo.complete} />
